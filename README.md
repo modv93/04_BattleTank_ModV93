@@ -8,3 +8,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 01_Readme_markup
 * 01_Readme_markup_2
 * 01_Readme_markup_3
+* 02 Github repo setup
