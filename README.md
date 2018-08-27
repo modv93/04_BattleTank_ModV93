@@ -14,3 +14,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 04 Landscape version_1
 * 05 Landscape Color  materials
 * 06 Landscape iteration 1 complete
+* 07 Tank BluePrint complete and placed
