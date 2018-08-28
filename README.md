@@ -16,3 +16,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 06 Landscape iteration 1 complete
 * 07 Tank BluePrint complete and placed
 * 08 Improved tank blueprint, Aim Azimuth and Aim Elevation setup
+* 09 Third Person Camera setup finish (Changes in BP)
