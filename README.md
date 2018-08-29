@@ -18,3 +18,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 08 Improved tank blueprint, Aim Azimuth and Aim Elevation setup
 * 09 Third Person Camera setup finish (Changes in BP)
 * 10 Main menu UI elements added
+* 11 Game iteration complete, TankPlayerController_U added
