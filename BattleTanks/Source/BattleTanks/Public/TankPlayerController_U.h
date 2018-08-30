@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// #Battle Tanks is an open world TPS developed and modified by Mod_V93.
 
 #pragma once
 
@@ -13,8 +13,5 @@ UCLASS()
 class BATTLETANKS_API ATankPlayerController_U : public APlayerController
 {
 	GENERATED_BODY()
-	
-	
-	
 	
 };
