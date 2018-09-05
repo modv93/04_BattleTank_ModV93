@@ -22,3 +22,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 12 TankPlayerController[original] tank possession setup
 * 13 AI tank controller possession setup
 * 14 AI player spotter setup
+* 15 Player ControllerTick setup for aiming

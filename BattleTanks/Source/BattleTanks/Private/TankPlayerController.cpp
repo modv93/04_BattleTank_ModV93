@@ -15,8 +15,17 @@ void ATankPlayerController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller is possessing %s"), *(ControlledTank->GetName()))
 	}
 }
+void ATankPlayerController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	//UE_LOG(LogTemp, Warning, TEXT("Player Controller Tick"))
+}
 ATank * ATankPlayerController::GetControlledTank() const
 {	
 	return Cast<ATank>(GetPawn());
+}
+
+void ATankPlayerController::AimTowardsCrossHair()
+{
+	if (!GetControlledTank()) {	return;	}
 }
 
