@@ -20,3 +20,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 10 Main menu UI elements added
 * 11 Game iteration complete, TankPlayerController_U added
 * 12 TankPlayerController[original] tank possession setup
+* 13 AI tank controller possession setup
