@@ -26,3 +26,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 16 GetSightRayHitLocation setup for aiming through crosshair
 * 17 Find Cross hair position pixel coordinates 
 * 18 Get world looking direction setup
+* 19 Line Trace for Cross hair setup

@@ -1,7 +1,8 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93.
 
 #include "TankPlayerController.h"
-
+#include "Engine/World.h"
+#include "Public/DrawDebugHelpers.h"
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -30,7 +31,7 @@ void ATankPlayerController::AimTowardsCrossHair()
 	if (!GetControlledTank()) {	return;	}
 	FVector OutHitLocation; // Out Parameter
 	if (GetSightRayHitLocation(OutHitLocation)) {
-		//UE_LOG(LogTemp, Warning, TEXT("HitLocation is %s"), *OutHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation is %s"), *OutHitLocation.ToString())
 			//TODO Controlled tank should aim at this point
 	}
 }
@@ -40,12 +41,38 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	int32 ViewPortSizeX, ViewPortSizeY;
 	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
 	auto ScreenLocation = FVector2D( ViewPortSizeX * CrossHairXLocation, ViewPortSizeY * CrossHairYLocation );
-	//UE_LOG(LogTemp, Warning, TEXT("ScreenLocation is %s"), *ScreenLocation.ToString())
-	//De Projectng the screenposition to worl position
-	FVector CameraWorldLocation, WorldDirection;
-	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, WorldDirection)) {
-		UE_LOG(LogTemp, Warning, TEXT("World Direction is %s"), *WorldDirection.ToString())
+
+	//De Projecting the screenposition to world position
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection)) {
+		//Line tracing to see what we'll hit
+		return GetLookVectoHitLocation(LookDirection, OutHitLocation);
 	}
-	OutHitLocation = FVector(1.0f);
-	return true;
+	return false;
 }
+bool ATankPlayerController::GetLookVectoHitLocation(FVector LookDirection, FVector& OutHitLocation) const{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LineTraceRange * LookDirection);
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
+		)) 
+	{
+		//DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor(255, 0, 0), false, -1, 0, 10);
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+	return false;
+}
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const{
+	FVector CameraWorldLocation;// To be discarded in this use case 
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X, 
+		ScreenLocation.Y, 
+		CameraWorldLocation, 
+		LookDirection);
+}
+
