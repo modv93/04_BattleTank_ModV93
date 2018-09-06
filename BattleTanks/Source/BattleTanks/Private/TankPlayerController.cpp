@@ -31,7 +31,7 @@ void ATankPlayerController::AimTowardsCrossHair()
 	if (!GetControlledTank()) {	return;	}
 	FVector OutHitLocation; // Out Parameter
 	if (GetSightRayHitLocation(OutHitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation is %s"), *OutHitLocation.ToString())
+		GetControlledTank()->AimAt(OutHitLocation);
 			//TODO Controlled tank should aim at this point
 	}
 }
@@ -61,7 +61,7 @@ bool ATankPlayerController::GetLookVectoHitLocation(FVector LookDirection, FVect
 		ECollisionChannel::ECC_Visibility
 		)) 
 	{
-		//DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor(255, 0, 0), false, -1, 0, 10);
+		//DrawDebugLine(GetWorld(), StartLocation, HitResult.Location, FColor(255, 0, 0), false, -1, 0, 10);
 		OutHitLocation = HitResult.Location;
 		return true;
 	}

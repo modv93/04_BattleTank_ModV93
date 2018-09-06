@@ -22,6 +22,19 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("AI Controller found %s"), *(PlayerTank->GetName()))
 	}
 }
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if(GetPlayerTank())
+	{
+		//TODO move towards the player 
+
+		//Aim at the player 
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+		//Fire if ready
+	}
+	//UE_LOG(LogTemp, Warning, "%s AI is aiming at %s player", *GetControlledTank->GetName(), *AimAt(GetPlayerTank()->GetActorLocation()))
+}
 ATank * ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());

@@ -27,3 +27,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 17 Find Cross hair position pixel coordinates 
 * 18 Get world looking direction setup
 * 19 Line Trace for Cross hair setup
+* 20 AI tanks to aim at Player tank setup
