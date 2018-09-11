@@ -30,3 +30,4 @@ Open world head to head tank battle with simple AI, terrain and advanced control
 * 20 AI tanks to aim at Player tank setup
 * 21 Tank Aiming component class setup, logs redirected 
 * 22 Barrel component setup and reporting 
+* 23 Suggest Projectile velocity function call complete 

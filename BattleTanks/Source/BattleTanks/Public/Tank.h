@@ -35,5 +35,8 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UStaticMeshComponent* Barrel = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000.f; //TODO find sensible default value
 	
 };
