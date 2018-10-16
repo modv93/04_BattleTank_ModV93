@@ -1,5 +1,6 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
+
 #include "TankAimingComponent.h"
 
 
@@ -12,7 +13,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -43,7 +44,9 @@ void UTankAimingComponent::AimAt(FVector Hitlocation, float LaunchSpeed)
 }
 void UTankAimingComponent::MoveBarrelTowards(FVector  AimDirection)
 {
-	auto barrelRotator = Barrel->GetForwardVector().Rotation();
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator at %s"), *AimAsRotator.ToString())
+	auto DeltaRotation = AimAsRotator - BarrelRotator;
+	Barrel->Elevate(5);//TODO magic number  
+
 }
