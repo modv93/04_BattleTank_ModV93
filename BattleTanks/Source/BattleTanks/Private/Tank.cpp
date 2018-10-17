@@ -1,5 +1,6 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
+#include "TankBarrel.h"
 #include "Tank.h"
 
 
@@ -12,7 +13,7 @@ ATank::ATank()
 	//No need to protect pointer as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
-void ATank::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
