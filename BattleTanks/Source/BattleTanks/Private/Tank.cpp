@@ -1,9 +1,10 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
-
-#include "TankBarrel.h"
-#include "TankAimingComponent.h"
 #include "Tank.h"
+#include "TankBarrel.h"
+#include "TankTurret.h"
+#include "TankAimingComponent.h"
+#include "Engine/World.h"
 
 
 // Sets default values
@@ -18,6 +19,15 @@ ATank::ATank()
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+}
+void ATank::SetTurretReference(UTankTurret* TurretToSet)
+{
+	TankAimingComponent->SetTurretReference(TurretToSet);
+}
+void ATank::Fire()
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f Tank Fired.. "), Time)
 }
 // Called when the game starts or when spawned
 void ATank::BeginPlay()

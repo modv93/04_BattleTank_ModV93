@@ -10,6 +10,7 @@
 
 //Forward Declare
 class UTankBarrel; 
+class UTankTurret;
 
 //Holds Parameters for barrels 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -20,8 +21,8 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	//TODO Set Turret reference
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretReference(UTankTurret* BarrelToSet);
 protected:
 
 public:	
@@ -30,5 +31,6 @@ public:
 	
 private:
 	UTankBarrel * Barrel = nullptr;
+	UTankTurret * Turret = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
 };
