@@ -1,6 +1,7 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
 #include "TankBarrel.h"
+#include "Engine/World.h"
 #include "TankAimingComponent.h"
 
 
@@ -32,20 +33,31 @@ void UTankAimingComponent::AimAt(FVector Hitlocation, float LaunchSpeed)
 		StartLocation,
 		Hitlocation,
 		LaunchSpeed,
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	if(bHaveAimSolution)
 	 //Calculate OutLaunchVelocity
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		//UE_LOG(LogTemp, Warning, TEXT("firing at %f"), *AimDirection.ToString())
+		//UE_LOG(LogTemp, Warning, TEXT("Aim solution found "), *AimDirection.ToString())
 		MoveBarrelTowards(AimDirection);
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f Aim solution found "), Time)
+	}
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f NO Aim solution found "), Time)
 	}
 }
 void UTankAimingComponent::MoveBarrelTowards(FVector  AimDirection)
 {
 	auto barrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator at %s"), *AimAsRotator.ToString())
-	Barrel->Elevate(5);
+	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator at %s"), *AimAsRotator.ToString())
+	auto DeltaRotator = AimAsRotator - barrelRotator;
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number 
 }

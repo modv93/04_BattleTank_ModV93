@@ -1,6 +1,7 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
 #include "TankAIController.h"
+#include "Tank.h"
 
 void ATankAIController::BeginPlay()
 {
