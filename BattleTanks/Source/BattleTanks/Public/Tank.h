@@ -43,6 +43,8 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UTankBarrel* Barrel = nullptr; // Local barrel reference for projectile spawning 
+	float ReloadTimeInSeconds = 3.f;
+	double LastFireTime = 0.f;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 5000.f; //TODO find sensible default value
