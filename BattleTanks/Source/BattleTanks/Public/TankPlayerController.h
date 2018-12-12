@@ -20,11 +20,11 @@ public:
 	void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	ATank* GetControlledTank() const;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = .5f; 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = 0.3333333f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.f;
 private:
 	/*Start the tank moving it's barrel towards the crosshair, 

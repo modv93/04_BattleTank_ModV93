@@ -29,7 +29,7 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet)
 void ATank::Fire()
 {
 	// time delay between each shot fired 
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
 	if (Barrel && isReloaded) {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -37,7 +37,7 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
+		LastFireTime = GetWorld()->GetTimeSeconds(); // FPlatformTime::Seconds(); Platform time returns in game time  
 	}
 }
 // Called when the game starts or when spawned

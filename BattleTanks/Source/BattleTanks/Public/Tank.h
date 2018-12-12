@@ -39,17 +39,20 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint; //TODO find sensible default value
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 5000.f; //TODO find sensible default value
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing) //Use EditDefaultsOnly to make it tweekable for all tanks by default
+	float ReloadTimeInSeconds = 3.f; //TODO find sensible default value
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UTankBarrel* Barrel = nullptr; // Local barrel reference for projectile spawning 
-	float ReloadTimeInSeconds = 3.f;
-	double LastFireTime = 0.f;
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 5000.f; //TODO find sensible default value
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint; //TODO find sensible default value
+	
+	float LastFireTime = 0.f;
 	
 };
