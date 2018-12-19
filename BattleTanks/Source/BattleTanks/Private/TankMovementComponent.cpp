@@ -13,21 +13,17 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	//TODO remove double speed over ride 
 }
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Intend turn right throw: %f"), Throw);
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	//TODO double speed over ride 
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
 {
 	//No need to call super as we are replacing the functionality
-	//auto TankName = GetOwner()->GetName();
 	auto TankForward = (GetOwner()->GetActorForwardVector()).GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 	
