@@ -1,6 +1,7 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "Public/DrawDebugHelpers.h"
 #include "Tank.h"
@@ -8,16 +9,16 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	//UE_LOG(LogTemp, Warning, TEXT("Player Controller Begin Play"))
-		auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) {
-		//UE_LOG(LogTemp, Warning, TEXT("Player Controller not possessing a tank"))
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+
+	if (AimingComponent) 
+	{ 
+		FoundAimingComponent(AimingComponent);
 	}
 	else
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Player Controller is possessing %s"), *(ControlledTank->GetName()))
+		UE_LOG(LogTemp, Warning, TEXT("Can not find tank aiming component"))
 	}
-	return;
 }
 void ATankPlayerController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
