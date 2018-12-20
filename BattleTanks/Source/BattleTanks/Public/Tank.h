@@ -22,13 +22,7 @@ class BATTLETANKS_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Fire();
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -44,18 +38,16 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint; //TODO find sensible default value
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint; 
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 5000.f; //TODO find sensible default value
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing) //Use EditDefaultsOnly to make it tweekable for all tanks by default
+	UPROPERTY(EditDefaultsOnly, Category = "Firing") //Use EditDefaultsOnly to make it tweekable for all tanks by default
 	float ReloadTimeInSeconds = 3.f; //TODO find sensible default value
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	//TODO Remove
 	UTankBarrel* Barrel = nullptr; // Local barrel reference for projectile spawning 
 	
 	float LastFireTime = 0.f;
