@@ -21,5 +21,10 @@ public:
 
 	//Max force per track in newtons
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxDrivingForce = 400000.f; // 40,000 KG tank and 1G accelaration
+	float TrackMaxDrivingForce = 400000.f;
+	// 40,000 KG tank and 1G accelaration
+
+private:	
+	UTankTrack();
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };
