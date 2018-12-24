@@ -37,11 +37,14 @@ protected:
 
 
 public:	
-	void AimAt(FVector Hitlocation, float LaunchSpeed);
+	void AimAt(FVector Hitlocation);
 	
 private:
 	UTankBarrel * Barrel = nullptr;
 	UTankTurret * Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 5000.f;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };

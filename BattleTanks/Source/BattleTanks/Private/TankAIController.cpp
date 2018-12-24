@@ -1,7 +1,7 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
 #include "TankAIController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 
 void ATankAIController::BeginPlay()
@@ -11,16 +11,16 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto ControlledTank = Cast<ATank>(GetPawn());
-	if(ensure(PlayerTank))
-	{
-		//Move towards the player 
-		MoveToActor(PlayerTank, AcceptanceRadius);
-
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
-		ControlledTank->Fire();
-	}
+	auto PlayerTank = (GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = GetPawn();
+	if (!ensure(PlayerTank && ControlledTank)) { return; }
+		
+	//Move towards the player 
+	MoveToActor(PlayerTank, AcceptanceRadius);
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
+	//ControlledTank->Fire(); // TODO Fix firing 
 	//UE_LOG(LogTemp, Warning, "%s AI is aiming at %s player", *GetControlledTank->GetName(), *AimAt(GetPlayerTank()->GetActorLocation()))
 }
 

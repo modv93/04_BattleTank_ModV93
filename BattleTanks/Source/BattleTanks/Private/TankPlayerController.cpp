@@ -4,13 +4,11 @@
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "Public/DrawDebugHelpers.h"
-#include "Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 }
@@ -20,17 +18,15 @@ void ATankPlayerController::Tick(float DeltaTime) {
 	//UE_LOG(LogTemp, Warning, TEXT("Player Controller Tick"))
 	AimTowardsCrossHair();
 }
-ATank * ATankPlayerController::GetControlledTank() const
-{	
-	return Cast<ATank>(GetPawn());
-}
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!ensure(GetControlledTank())) {	return;	}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+
 	FVector OutHitLocation; // Out Parameter
 	if (GetSightRayHitLocation(OutHitLocation)) {
-		GetControlledTank()->AimAt(OutHitLocation);
+		AimingComponent->AimAt(OutHitLocation);
 			//TODO Controlled tank should aim at this point
 	}
 }

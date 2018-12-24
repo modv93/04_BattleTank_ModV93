@@ -26,8 +26,6 @@ public:
 	float LineTraceRange = 1000000.f;
 
 protected: 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
 
 	UFUNCTION(BlueprintImplementableEvent, category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent * AimCompRef);
