@@ -12,8 +12,40 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 	// ...
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	//First fire to be after reload
+	LastFireTime = GetWorld()->GetTimeSeconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Aim comp ticking"));
+	// time delay between each shot fired 
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		FireState = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		FireState = EFiringState::Aiming;
+	}
+	else
+	{
+		FireState = EFiringState::Locked;
+	}
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	
+	auto BarrelForward = Barrel->GetForwardVector();
+	return !(BarrelForward.Equals(AimDirection, 0.01));
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
@@ -43,7 +75,7 @@ void UTankAimingComponent::AimAt(FVector Hitlocation)
 	if(bHaveAimSolution)
 	 //Calculate OutLaunchVelocity
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 	}
 	else
@@ -56,9 +88,7 @@ void UTankAimingComponent::AimAt(FVector Hitlocation)
 void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-	// time delay between each shot fired 
-	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (isReloaded) {
+	if (FireState != EFiringState::Reloading) {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
@@ -79,3 +109,4 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
 }
+
