@@ -5,7 +5,6 @@
 #include "TankTurret.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Engine/World.h"
 
 
@@ -14,10 +13,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("Momo : Tank constructor %s"), *TankName);
-
 }
 
 void ATank::Fire()
@@ -38,14 +33,11 @@ void ATank::Fire()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("Momo : Tank begin play %s"), *TankName);
 	Super::BeginPlay();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
-
 // Called every frame
-
 
 // Called to bind functionality to input
 
@@ -53,4 +45,5 @@ void ATank::AimAt(FVector HitLocation)
 {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+	UE_LOG(LogTemp, Warning, TEXT("I Am here"));
 }
