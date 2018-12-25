@@ -26,7 +26,9 @@ void ATankPlayerController::AimTowardsCrossHair()
 	if (!ensure(AimingComponent)) { return; }
 
 	FVector OutHitLocation; // Out Parameter
-	if (GetSightRayHitLocation(OutHitLocation)) {
+	bool bGotHitLocation = GetSightRayHitLocation(OutHitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("Hit location is %i"), bGotHitLocation);
+	if (bGotHitLocation) {
 		AimingComponent->AimAt(OutHitLocation);
 			//TODO Controlled tank should aim at this point
 	}
