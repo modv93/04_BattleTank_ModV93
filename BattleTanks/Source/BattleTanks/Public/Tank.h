@@ -10,6 +10,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
