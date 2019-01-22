@@ -1,13 +1,37 @@
 // #Battle Tanks is an open world TPS developed and modified by Mod_V93
 
 #include "TankTrack.h"
-
+#include "SprungWheel.h"
+#include "SpawnPoint.h"
 
 UTankTrack::UTankTrack()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+TArray<ASprungWheel*> UTankTrack::GetWheels() const
+{
+	TArray<ASprungWheel*> ResultArray;
+	TArray<USceneComponent*> Children;
+
+	GetChildrenComponents(true, Children);
+	for (USceneComponent* Child : Children)
+	{
+		auto SpawnPointChild = Cast<USpawnPoint>(Child);
+		if (!SpawnPointChild) { continue; }
+
+		AActor* SpawnedChild = SpawnPointChild->GetSpawnedActor();
+		auto SprungWheel = Cast<ASprungWheel>(SpawnedChild);
+		if (!SprungWheel) { continue; }
+
+		ResultArray.Add(SprungWheel);
+	}
+
+	return ResultArray;
+}
+
+/* 
+Changes made for applying force directly on wheels, physics forces setup on the wheels. Change Identifier : TRACK_FORCE
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
@@ -16,11 +40,9 @@ void UTankTrack::BeginPlay()
 
 void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
-	DriveTrack();
+	DriveTrack(); 
 	ApplySidewaysForce();
-	CurrentThrottle = 0;
 }
-
 
 void UTankTrack::ApplySidewaysForce()
 {
@@ -36,17 +58,28 @@ void UTankTrack::ApplySidewaysForce()
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAccelaration) / 2;
 	TankRoot->AddForce(CorrectionForce);
 }
+*/
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
-	
+	float CurrentThrottle = FMath::Clamp<float>(Throttle, -1, 1);
+	DriveTrack(CurrentThrottle);
 }
 
-void UTankTrack::DriveTrack()
+void UTankTrack::DriveTrack(float CurrentThrottle)
 {
+	auto ForceApplied = CurrentThrottle * TrackMaxDrivingForce;
+	auto Wheels = GetWheels();
+	auto ForcePerWheel = ForceApplied / Wheels.Num();
+	for (ASprungWheel* Wheel : Wheels)
+	{
+		Wheel->AddDrivingForce(ForcePerWheel);
+	}
+	/*
+	Code for appplying force on tank tracks| Change_identifier : TRACK_FORCE
 	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	*/
 }

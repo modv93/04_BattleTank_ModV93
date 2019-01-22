@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+class ASprungWheel;
 /**
  * TankTrack is a static mesh component used to apply force for moving the tank. 
  */
@@ -27,15 +28,17 @@ public:
 private:	
 	UTankTrack();
 
-	virtual void BeginPlay() override;
+	TArray<ASprungWheel*> GetWheels() const;
+	void DriveTrack(float CurrentThrottle);
 
+	/*
+	Changes made for applying force directly on wheels, physics forces setup on the wheels. Change Identifier : TRACK_FORCE
+	virtual void BeginPlay() override;
 	void ApplySidewaysForce();
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent * HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 				FVector NormalImpulse, const FHitResult& Hit);
-
-	void DriveTrack();
-
-	float CurrentThrottle = 0.f;
+	*/
+	
 };
