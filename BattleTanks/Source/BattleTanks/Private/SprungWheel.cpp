@@ -52,7 +52,6 @@ void ASprungWheel::SetupConstraint()
 void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Tick %f"), GetWorld()->GetTimeSeconds());
 	if (GetWorld()->TickGroup == TG_PostPhysics)
 	{
 		TotalForceMagnitudeThisFrame = 0;
@@ -68,7 +67,6 @@ void ASprungWheel::OnHit(UPrimitiveComponent * HitComponent, AActor* OtherActor,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
 	ApplyForce();
-	UE_LOG(LogTemp, Warning, TEXT("OnHit %f"), GetWorld()->GetTimeSeconds());
 }
 
 void ASprungWheel::ApplyForce()
