@@ -22,7 +22,7 @@ private:
 
 	void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(EditAnywhere, Category = "Setup")
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
